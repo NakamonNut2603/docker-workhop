@@ -2,9 +2,6 @@ pipeline {
     agent any
     stages {
         stage('Build Docker Image') {
-            agent docker{
-
-            }
             steps {
                 sh 'echo "Build Docker Image"'
                 sh 'docker build -t nakamonnut/nestjs-app-image -f ./Dockerfile .'
