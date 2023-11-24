@@ -12,6 +12,7 @@ pipeline {
                 script {
                     sh 'echo "Push Image to Docker Hub"'
                     sh 'docker push nakamonnut/nestjs-app-image'
+                    sh 'docker rmi nakamonnut/nestjs-app-image'
                 }
             }   
         }
