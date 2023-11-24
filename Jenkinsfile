@@ -1,20 +1,15 @@
 pipeline {
-    agent any
+    agent none
     stages {
         stage('Build Docker Image') {
             steps {
-                script {
-                    app = docker.build("nakamonnut/nestjs-app-image")
-                }
+                sh 'docker build -t nakamonnut/nestjs-app-image -f ./Dockerfile .'
             }
         }
         stage('Push image to docker') {
             steps{
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'git') {            
-                        app.push("${env.BUILD_NUMBER}")            
-                        app.push("latest")        
-                    }
+                    
                 }
             }   
         }
