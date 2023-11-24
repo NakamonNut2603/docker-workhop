@@ -11,5 +11,5 @@ spec:
     targetPort: 3000
     nodePort: 30000 # กำหนดหมายเลข NodePort (30000-32767)
   selector:
-    run: nestjs-app
+    app: nestjs-app
   type: NodePort # เพิ่มเติมในส่วนของประเภทให้เป็น NodePort
