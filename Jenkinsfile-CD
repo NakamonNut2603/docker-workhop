@@ -4,7 +4,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 sh 'echo "Deploy to Kubernetes"'
-                sh 'kubectl apply -f deployment.yaml -n jenkins-to-kube'
+                sh 'kubectl apply -f helm/deployment.yaml -n jenkins-to-kube'
             }
         }
     }
