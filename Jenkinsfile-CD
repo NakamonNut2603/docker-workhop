@@ -3,14 +3,14 @@ pipeline {
     stages {
         stage('Deploy to Kubernetes') {
             steps {
-                sh 'echo "Deploy to Kubernetes'
-                sh 'kubectl create -f deployment.yaml -n jenkins-to-kube'
+                sh 'echo "Deploy to Kubernetes"'
+                sh 'kubectl apply -f deployment.yaml -n jenkins-to-kube'
             }
         }
         stage('Create NP Service') {
             steps {
                 sh 'echo "Create NP Service"'
-                sh 'kubectl create -f nodeport.yaml -n jenkins-to-kube'
+                sh 'kubectl apply -f nodeport.yaml -n jenkins-to-kube'
             }
         }
     }
