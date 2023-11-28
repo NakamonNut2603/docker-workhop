@@ -1,1 +1,1 @@
-IMAGE_NAME: nakamonnut/nestjs-app-image:${VERSION}
+imageName: nakamonnut/nestjs-app-image:f8b5880
