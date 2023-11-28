@@ -12,14 +12,15 @@ pipeline {
         stage('Generate Manifest') {
             steps {
                 sh 'echo "Generate Manifest"'
-                sh 'helm template helm --values helm/values.yaml --output-dir helm --debug'
+                sh 'envsubst < helm/values.yaml > helm/sub-values.yaml'
+                sh 'helm template helm --values helm/sub-values.yaml --output-dir helm --debug'
                 sh 'mv helm/helm/templates/deployment.yaml helm'
             }
         }
         stage('Deploy to Kubernetes') {
             steps {
                 sh 'echo "Deploy to Kubernetes ${ENV}"'
-                sh 'kubectl create secret generic env-secret --from-file=.env=config/${ENV}.env -n jenkins-to-kube --dry-run=client -o yaml > env-secret.yaml'
+                sh 'kubectl create secret generic env-secret --from-env-file=config/${ENV}.env -n jenkins-to-kube --dry-run=client -o yaml > env-secret.yaml'
                 sh 'kubectl apply -f env-secret.yaml -n jenkins-to-kube'
                 sh 'kubectl apply -f helm/deployment.yaml -n jenkins-to-kube'
             }
