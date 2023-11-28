@@ -24,7 +24,7 @@ pipeline {
                 sh 'kubectl create secret generic ${ENV_NAME} --from-env-file=config/${ENV}.env -n jenkins-to-kube-${ENV} --dry-run=client -o yaml > env-secret-${ENV}.yaml'
                 sh 'kubectl apply -f env-secret-${ENV}.yaml -n jenkins-to-kube-${ENV}'
                 sh 'kubectl apply -f helm/deployment.yaml -n jenkins-to-kube-${ENV}'
-                sh "kubectl rollout restart deployment nestjs-app-deployment -n jenkins-to-kube"
+                sh 'kubectl rollout restart deployment nestjs-app-deployment -n jenkins-to-kube-${ENV}'
             }
         }
     }
