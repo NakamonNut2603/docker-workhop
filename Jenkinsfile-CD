@@ -7,6 +7,7 @@ pipeline {
     environment {
         VERSION = "${params.VERSION_TO_DEPLOY}"
         ENV = "${params.ENVIRONMENT}"
+        ENV_NAME = "env-secret-${ENV}"
     }
     stages {
         stage('Generate Manifest') {
@@ -20,9 +21,9 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 sh 'echo "Deploy to Kubernetes ${ENV}"'
-                sh 'kubectl create secret generic env-secret --from-env-file=config/${ENV}.env -n jenkins-to-kube --dry-run=client -o yaml > env-secret.yaml'
-                sh 'kubectl apply -f env-secret.yaml -n jenkins-to-kube'
-                sh 'kubectl apply -f helm/deployment.yaml -n jenkins-to-kube'
+                sh 'kubectl create secret generic ${ENV_NAME} --from-env-file=config/${ENV}.env -n jenkins-to-kube --dry-run=client -o yaml > env-secret-${ENV}.yaml'
+                sh 'kubectl apply -f env-secret-${ENV}.yaml -n jenkins-to-kube-${ENV}'
+                sh 'kubectl apply -f helm/deployment.yaml -n jenkins-to-kube-${ENV}'
                 sh "kubectl rollout restart deployment nestjs-app-deployment -n jenkins-to-kube"
             }
         }
