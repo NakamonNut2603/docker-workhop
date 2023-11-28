@@ -12,7 +12,7 @@ pipeline {
         stage('Deploy to Docker') {
             steps {
                 sh 'echo "Deploy to Docker ${ENV}"'
-                sh 'docker run --expose=3001 --env-file=./config/${ENV}.env nakamonnut/nestjs-app-image:${VERSION}&'
+                sh 'docker run -p 3001:3000 --env-file=./config/${ENV}.env nakamonnut/nestjs-app-image:${VERSION}&'
             }
         }
     }
