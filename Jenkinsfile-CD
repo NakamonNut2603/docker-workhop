@@ -6,6 +6,7 @@ pipeline {
     }
     environment {
         VERSION = "${params.VERSION_TO_DEPLOY}"
+        ENV = "${params.ENVIRONMENT}"
     }
     stages {
         stage('Generate Manifest') {
@@ -17,8 +18,8 @@ pipeline {
         }
         stage('Deploy to Kubernetes') {
             steps {
-                sh 'echo "Deploy to Kubernetes ${params.ENVIRONMENT}"'
-                sh 'kubectl create secret generic env-secret --from-file=.env=config/${params.ENVIRONMENT}.env -n jenkins-to-kube --dry-run=client -o yaml > env-secret.yaml'
+                sh 'echo "Deploy to Kubernetes ${ENV}"'
+                sh 'kubectl create secret generic env-secret --from-file=.env=config/${ENV}.env -n jenkins-to-kube --dry-run=client -o yaml > env-secret.yaml'
                 sh 'kubectl apply -f env-secret.yaml -n jenkins-to-kube'
                 sh 'kubectl apply -f deployment.yaml -n jenkins-to-kube'
             }
