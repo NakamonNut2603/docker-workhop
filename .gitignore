@@ -1,6 +1,8 @@
 .env.development
 .env.test
 
+/src/db/docker/.mysql-data
+
 # compiled output
 /dist
 /node_modules

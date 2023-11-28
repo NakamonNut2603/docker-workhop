@@ -1,20 +1,24 @@
 const dbConfig = {
-    synchronize: false,
+    host: 'localhost',
+    username: 'root',
+    password: '12345',
+    database: 'sirisoft',
+    synchronize: true
 }
 
 switch (process.env.NODE_ENV) {
     case 'development':
         Object.assign(dbConfig, {
-            type: 'sqlite',
-            database: 'db.sqlite',
-            entities: ['**/*entity.js']
+            type: 'mysql',
+            entities: ['**/*entity.js'],
+            port: 3306
         } )
         break;
     case 'test':
         Object.assign(dbConfig, {
-            type: 'sqlite',
-            database: 'test.sqlite',
-            entities: ['**/*entity.ts']
+            type: 'mysql',
+            entities: ['**/*entity.ts'],
+            port: 3307
         })
         break;
     case 'production':

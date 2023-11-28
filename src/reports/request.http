@@ -5,7 +5,7 @@ Content-Type: application/json
 {
     "make": "Toyota",
     "model": "Corolla",
-    "year": 198,
+    "year": 1980,
     "mileage": 130000,
     "lng": 5,
     "lat": 10,
@@ -13,7 +13,7 @@ Content-Type: application/json
 }
 
 ### Approved report
-PATCH http://localhost:3000/reports/7
+PATCH http://localhost:3000/reports/2
 Content-Type: application/json
 
 {

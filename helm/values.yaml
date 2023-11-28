@@ -1,0 +1,1 @@
+IMAGE_NAME: nakamonnut/nestjs-app-image:${VERSION}

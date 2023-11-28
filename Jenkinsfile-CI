@@ -1,18 +1,22 @@
 pipeline {
     agent any
+    environment {
+        VERSION_TAG = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+    }
     stages {
         stage('Build Docker Image') {
             steps {
                 sh 'echo "Build Docker Image"'
-                sh 'docker build -t nakamonnut/nestjs-app-image -f ./Dockerfile .'
+                sh 'docker build -t nakamonnut/nestjs-app-image:${VERSION_TAG} -f ./Dockerfile .'
             }
         }
         stage('Push image to docker') {
             steps{
                 script {
                     sh 'echo "Push Image to Docker Hub"'
-                    sh 'docker push nakamonnut/nestjs-app-image'
-                    sh 'docker rmi nakamonnut/nestjs-app-image'
+                    sh 'docker push nakamonnut/nestjs-app-image:${VERSION_TAG}'
+                    sh 'docker rmi nakamonnut/nestjs-app-image:${VERSION_TAG}'
+                    sh 'echo "${VERSION_TAG}"'
                 }
             }   
         }

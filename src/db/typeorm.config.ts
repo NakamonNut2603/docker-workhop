@@ -1,13 +1,15 @@
+import { ParseBoolPipe } from "@nestjs/common";
 import { DataSource, DataSourceOptions } from "typeorm";
 
 export const dataSourceOptions: DataSourceOptions = {
-    type: 'sqlite',
-    database: process.env.NODE_ENV === 'development' ? 'db.sqlite' : 'test.sqlite',
+    type: 'mysql',
+    host: process.env.MYSQL_HOST,
+    port: parseInt(process.env.MYSQL_PORT),
+    username: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DB,
     entities: process.env.NODE_ENV === 'development' ? ['dist/**/*.entity.js'] : ['./src/**/*.entity.ts'],
-    synchronize: false,
-    migrations: ['./src/db/migrations/*.ts'],
-    migrationsTableName: 'migrations',
-    migrationsRun: process.env.NODE_ENV == 'test'
+    synchronize: true
 };
 
 
