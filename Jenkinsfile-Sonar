@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+    environment {
+        SCANNER_HOME = tool 'Sonar-5-0-1';    
+    }
+    stages {
+        stage('Scan code') {
+            steps {
+                
+                withSonarQubeEnv('sonarqube-9-8') {
+                    sh "${SCANNER_HOME}/bin/sonar-scanner"
+                }
+            }
+        }
+    }
+}
