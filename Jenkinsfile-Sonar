@@ -8,7 +8,12 @@ pipeline {
             steps {
                 
                 withSonarQubeEnv('sonarqube-9-8') {
-                    sh "${SCANNER_HOME}/bin/sonar-scanner"
+                    sh "${SCANNER_HOME}/bin/sonar-scanner -Dsonar.qualitygate.wait"
+                }
+                def qg = waitForQualityGate()
+                if (qg.status != 'OK') {
+                    currentBuild.result = "FAILURE"
+                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
                 }
             }
         }
