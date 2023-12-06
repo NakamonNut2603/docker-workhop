@@ -6,9 +6,15 @@ pipeline {
     stages {
         stage('Scan code') {
             steps {
-                
-                withSonarQubeEnv('sonarqube-9-8') {
-                    sh "${SCANNER_HOME}/bin/sonar-scanner"
+                script {
+                    withSonarQubeEnv('sonarqube-9-8') {
+                        sh "${SCANNER_HOME}/bin/sonar-scanner -Dsonar.qualitygate.wait -Dsonar.sourceEncoding=UTF-8 -Dsonar.sources=."
+                    }
+                    def qg = waitForQualityGate()
+                    if (qg.status != 'OK') {
+                        currentBuild.result = "FAILURE"
+                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                    }
                 }
             }
         }
