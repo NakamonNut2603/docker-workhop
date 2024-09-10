@@ -1,2 +1,0 @@
-imageName: nakamonnut/nestjs-app-image:${VERSION}
-envName: ${ENV_NAME}

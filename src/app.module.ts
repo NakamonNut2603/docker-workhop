@@ -8,7 +8,7 @@ import { ReportsModule } from './reports/reports.module';
 import { User } from './users/user.entity';
 import { Report } from './reports/report.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { dataSourceOptions } from '../src/db//typeorm.config';
+import { dataSourceOptions } from './db/typeorm.config';
 const cookieSession = require('cookie-session');
 
 @Module({
